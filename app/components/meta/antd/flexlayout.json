@@ -1,0 +1,16 @@
+{
+    "meta": {
+        "metaType": "layout",
+	"children": ["layout"],
+	"module": "antd",
+    },
+    "events": {
+	
+    },
+    "properties": {
+	"rowNumber": {
+	    "value": 1,
+	    "type": "number",
+	},
+    },
+}

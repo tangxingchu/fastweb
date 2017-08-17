@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import Container from './components/container';
 
 require('antd/dist/antd.min.css');
 require('./app.css');
@@ -12,6 +13,6 @@ document.body.appendChild(app);
 
 
 ReactDOM.render(
-	<h1>Heladadaaaaaaaaas!!!</h1>,
+	<Container/>,
     app
 );
