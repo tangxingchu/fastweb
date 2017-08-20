@@ -5,7 +5,9 @@ export default class Layout extends Component {
 	
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			rows: []
+		};
 	}
 	
 	componentWillMount() {
@@ -31,7 +33,11 @@ export default class Layout extends Component {
 	render() {
 		return (
 			<Row>
-				<Col span={24}>{this.props.children}</Col>
+				<Col span={24}>
+					{this.state.rows.map((item, index)=> {
+						return null;
+					})}
+				</Col>
 			</Row>
 		)
 	}
@@ -45,7 +51,6 @@ Layout.propTypes = {
 	row_justify: React.PropTypes.string,
 	col_span: React.PropTypes.number,
 	col_className: React.PropTypes.string,
-	
 }
 
 Layout.defaultProps = {

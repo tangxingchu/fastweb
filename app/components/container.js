@@ -5,10 +5,19 @@ import { Layout } from './designer/custcomponents';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
+const modules = {
+	'Row': Row,
+}
+
 export default class Container extends Component {
 	
 	constructor(props) {
 		super(props);
+		this.state = {
+			rowNum: '',
+			colNum: '',
+			children: [{'metaType': 'Row', 'style': {'border': '1px dashed red'}},{'metaType': 'Row', 'style': {'border': '1px dashed blue'}}]
+		};
 	}
 	
 	componentWillMount() {
@@ -16,7 +25,7 @@ export default class Container extends Component {
 	}
 
 	componentDidMount() {
-	
+		
 	}
 
 	componentWillUnmount() {
@@ -24,11 +33,11 @@ export default class Container extends Component {
 	}
 
 	componentWillUpdate(nextProps, nextState) {
-	
+		
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-
+		
 	}
 
 	render() {
@@ -38,14 +47,18 @@ export default class Container extends Component {
 			rows.push(rowNum);
 		}
 		let sampleNameSpace = {icon: Icon};
-		React.Children.map((child)=>{
+		React.Children.map(this.props.children, (child) => {
 			console.log(child);
 		});
 		return (
 			<Row>
-				<Col span={18}>
+				<Col span={18} style={styles.dashedCol}>
 					<sampleNameSpace.icon type='retweet'/>
 					<Button onClick={()=>{}}/>
+					{this.state.children.map((item, index)=> {
+						let Component = modules[item.metaType];
+						return <Component {...item}/>;
+					})}
 				</Col>
 				<Col span={6}>
 					<Menu
@@ -73,9 +86,16 @@ export default class Container extends Component {
 						  <a href="https://ant.design" target="_blank" rel="noopener noreferrer">Navigation Four - Link</a>
 						</Menu.Item>
 					  </Menu>
+					  
 				</Col>
 			</Row>
 		)
 	}
 
+}
+
+const styles = {
+	dashedCol: {
+		border: '1px dashed #ccc',
+	},
 }
