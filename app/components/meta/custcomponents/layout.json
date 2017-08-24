@@ -12,5 +12,9 @@
 	    "value": 1,
 	    "type": "number",
 	},
+	"colNumber": {
+	    "value": 1,
+	    "type": "number",
+	},
     },
 }
