@@ -20,7 +20,7 @@ export default class Row extends Component {
 
 		2、纯数据结构转变为jsx结构？（转换为模板的概念？可行吗？应该可行）
 
-		3、一个模块要分为：class组件定义(render jsx的dom)，函数组件定义(返回jsx的dom)，模板定义(套入数据)。
+		3、一个模块要分为：class组件定义(render jsx)，函数组件定义(返回jsx)，模板定义(套入数据)。
 		设计，需要抽象部分组件。需要考虑组件属性之间的联动。
 
 		4、同级之间的组件通讯（pubsubjs或者redux）
