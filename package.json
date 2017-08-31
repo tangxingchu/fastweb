@@ -12,6 +12,7 @@
   "dependencies": {
     "antd": "^2.12.5",
     "eslint": "^4.4.1",
+    "express": "^4.15.4",
     "g2": "^2.3.8",
     "g2-react": "^1.3.0",
     "qrcode.react": "^0.7.1",

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Row, Col, Menu, Icon, Button, Input, AutoComplete } from 'antd';
-import { Layout } from './designer/custcomponents';
+import { Layout } from './designer/antd';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
@@ -150,6 +150,7 @@ export default class Container extends Component {
 							return (<Component {...item}>row{index} c</Component>);
 						})}
 						<Complete/>
+						<Button type="primary">添加1行4列</Button>
 					</Col>
 					<Col span={6}>
 						<Menu
@@ -182,7 +183,8 @@ export default class Container extends Component {
 				</Row>
 				<Row>
 					<Col span={18}>
-						<div style={{height: 'calc(100% - 140px)', backgroundColor:'#efefef', border: '1px solid #ccc'}}></div>	
+						<div style={{height: 'calc(100% - 140px)', backgroundColor:'#efefef', border: '1px solid #ccc', overflow: 'auto'}}>
+						</div>
 					</Col>
 					<Col span={6}></Col>
 				</Row>
