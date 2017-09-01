@@ -3,7 +3,7 @@ import Constants from '../utils/constants'
 
 const initState = {
 	struct: {
-		metaType: 'layout',
+		
 	}
 }
 

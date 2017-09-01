@@ -139,6 +139,7 @@ export default class Container extends Component {
 		React.Children.map(this.props.children, (child) => {
 			console.log(child);
 		});
+		var createEl_div = React.createElement('div', null, 'fafa;fa;fka;kfaklfa');
 		return (
 			<Row>
 				<Row>
@@ -151,6 +152,7 @@ export default class Container extends Component {
 						})}
 						<Complete/>
 						<Button type="primary">添加1行4列</Button>
+						{createEl_div}
 					</Col>
 					<Col span={6}>
 						<Menu
