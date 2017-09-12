@@ -1,21 +1,23 @@
 const path = require('path');
 const webpack = require('webpack');
 const ROOT_PATH = path.resolve(__dirname);
-const PORT = 3010;
 
 module.exports = {
-	devtool: "source-map",
     entry: ROOT_PATH + '/app/app.js',
     resolve: {
         extensions: ['.js', '.jsx']
     },
     output: {
         filename: 'app.bundle.js',
-        path: path.join(__dirname, 'build'),
+        path: path.join(__dirname, 'dist'),
 		publicPath: '/assets/'
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.optimize.UglifyJsPlugin({
+			compress: {
+				warnings: false
+			}
+		})
     ],
     module: {
         rules: [
@@ -46,13 +48,5 @@ module.exports = {
                 }
             }
         ]
-    },
-	devServer: {
-		contentBase: path.join(__dirname, 'app'),
-		historyApiFallback: true,
-		hot: true,
-		inline: true,
-		host: '0.0.0.0',
-		port: PORT
-	}
+    }
 };

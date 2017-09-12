@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
-import { Row, Col, Menu, Icon, Button, Input, AutoComplete } from 'antd';
+import { Row, Col, Menu, Icon, Button, Input, AutoComplete, Form, Select, Modal} from 'antd';
 import { Layout } from './designer/antd';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
+const FormItem = Form.Item;
+const Option = Select.Option;
 
 const modules = {
 	'Row': Row,
 }
 
-const Option = AutoComplete.Option;
+const ACOption = AutoComplete.Option;
 const OptGroup = AutoComplete.OptGroup;
 
 const dataSource = [{
@@ -59,14 +61,14 @@ const options = dataSource.map(group => (
     label={renderTitle(group.title)}
   >
     {group.children.map(opt => (
-      <Option key={opt.title} value={opt.title}>
+      <ACOption key={opt.title} value={opt.title}>
         {opt.title}
         <span className="certain-search-item-count">{opt.count} 人 关注</span>
-      </Option>
+      </ACOption>
     ))}
   </OptGroup>
 )).concat([
-  <Option disabled key="all" className="show-all">
+  <ACOption disabled key="all" className="show-all">
     <a
       href="https://www.google.com/search?q=antd"
       target="_blank"
@@ -74,7 +76,7 @@ const options = dataSource.map(group => (
     >
       查看所有结果
     </a>
-  </Option>,
+  </ACOption>,
 ]);
 
 const Complete = () => {
@@ -139,19 +141,15 @@ export default class Container extends Component {
 		React.Children.map(this.props.children, (child) => {
 			console.log(child);
 		});
-		var createEl_div = React.createElement('div', null, 'fafa;fa;fka;kfaklfa');
+		var createEl_div = React.createElement(Button, {type: 'primary'}, 'fafa;fa;fka;kfaklfa1');
 		return (
 			<Row>
 				<Row>
 					<Col span={18} style={styles.dashedCol}>
 						<sampleNameSpace.icon type='retweet'/>
-						<Button onClick={()=>{}}/>
-						{this.state.children.map((item, index)=> {
-							let Component = modules[item.metaType];
-							return (<Component {...item}>row{index} c</Component>);
-						})}
+						<Button onClick={()=>{}}/>						
 						<Complete/>
-						<Button type="primary">添加1行4列</Button>
+						<Button type="primary" onClick={()=>{}}>添加1行4列</Button>
 						{createEl_div}
 					</Col>
 					<Col span={6}>
@@ -186,10 +184,25 @@ export default class Container extends Component {
 				<Row>
 					<Col span={18}>
 						<div style={{height: 'calc(100% - 140px)', backgroundColor:'#efefef', border: '1px solid #ccc', overflow: 'auto'}}>
+							{this.state.children.map((item, index)=> {
+								let Component = modules[item.metaType];
+								return (<Component {...item}>row{index} c</Component>);
+							})}
+							
 						</div>
 					</Col>
 					<Col span={6}></Col>
 				</Row>
+				<Modal
+								title="登录"
+								visible={true}
+								style={{textAlign: 'center', whiteSpace: 'nowrap'}}
+								width={400}
+								footer={null}
+								maskClosable={false}
+								closable={false}>
+								<WrappedLoginForm />
+							</Modal>
 			</Row>
 		)
 	}
@@ -200,4 +213,80 @@ const styles = {
 	dashedCol: {
 		border: '1px dashed #ccc',
 	},
+	loginForm: {
+		height: '4px',	
+	},
 }
+
+class LoginForm extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {loading: false, message: ''};
+	}
+
+	handleSubmit(e) {
+		this.setState({loading: true});
+		e.preventDefault();
+		let that = this;
+		this.props.form.validateFields((err, values) => {
+			if (!err) {
+				//console.log('Received values of form: ', values);
+				/*global.Zqmb.login(values.entry, values.userName, values.password, '', '').then(function(data){
+					
+				}).catch(function(error){
+					
+				});*/
+				window.setTimeout(function(){
+					window.localStorage.setItem('mb_userName', values.userName);
+					global.mbContainer.hideLoginModal();
+					that.setState({loading: false});
+				}, 2000)
+			} else {
+				this.setState({loading: false});
+			}
+		});
+	}
+
+	render() {
+		const { getFieldDecorator } = this.props.form;
+		const formItemLayout = {
+			labelCol: { span: 4 },
+			wrapperCol: { span: 19 },
+		};
+		return (
+			<Form onSubmit={this.handleSubmit.bind(this)} style={styles.loginForm}>
+				<FormItem>
+					{this.state.message}
+				</FormItem>
+				<FormItem label="入口" {...formItemLayout}>
+					{getFieldDecorator('entry', {
+						})(
+						<Select>
+							<Option value="moaservice">moaservice</Option>
+						</Select>
+					)}
+				</FormItem>
+				<FormItem label="用户名" {...formItemLayout}>
+					{getFieldDecorator('userName', {
+						rules: [{ required: true, message: '请输入用户名!' }],
+					})(
+						<Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="用户名" />
+					)}
+				</FormItem>
+				<FormItem label="密码" {...formItemLayout}>
+					{getFieldDecorator('password', {
+						rules: [{ required: true, message: '请输入密码!' }],
+					})(
+						<Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="密码" />
+					)}
+				</FormItem>
+				<FormItem>
+					<Button type="primary" htmlType="submit" loading={this.state.loading}>登录</Button>
+				</FormItem>
+			</Form>
+		)
+	}
+}
+
+const WrappedLoginForm = Form.create()(LoginForm);
